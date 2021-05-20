@@ -16,9 +16,8 @@ public class Main implements ActionListener{
     private JLabel wybierzLabel;
     private JPanel init;
     private JPanel pasek;
-    private JPanel dylatacja;
-    private JPanel skrocenie;
-    private boolean initInt = true;
+    public static JFrame okno_dylatacja = new JFrame("Dylatacja czasu");
+    public static JFrame okno_skrocenie = new JFrame("Skrócenie Lorentza");
 
     /**
      * Wizualizacja dylatacji czasu i skrócenia Lorentza
@@ -29,7 +28,7 @@ public class Main implements ActionListener{
     Main(){
         // Stworzenie okna
         f = new JFrame("Dylatacja czasu i skrócenie Lorentza");
-        f.setSize(1200,650);
+        f.setSize(600,400);
         f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         f.setLocationRelativeTo(null);
         f.setLayout(new BorderLayout());
@@ -49,12 +48,6 @@ public class Main implements ActionListener{
         menuBar.add(wybierzSymulacje);
         wybierzLabel = new JLabel("Wybierz symulację z pasku powyżej", SwingConstants.CENTER);
 
-        // Ustawienie panelu dylatacji
-        dylatacja = new JPanel();
-
-        // Ustawienie panelu skrócenia
-        skrocenie = new JPanel();
-
         // Dodanie elementów do okien
         pasek.add(menuBar, BorderLayout.NORTH);
         init.add(wybierzLabel, BorderLayout.CENTER);
@@ -72,26 +65,18 @@ public class Main implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==dylatacjaMenuItem){
-            if(initInt){
-                f.remove(init);
-                initInt = false;
-            }
-            else{
-                f.remove(skrocenie);
-            }
-            f.add(dylatacja, BorderLayout.CENTER);
+            okno_dylatacja.setContentPane(new Dylatacja().All);
+            okno_dylatacja.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            okno_dylatacja.pack();
+            okno_dylatacja.setLocationRelativeTo(null);
+            okno_dylatacja.setVisible(true);
         }
         if(e.getSource()==skrocenieMenuItem){
-            if(initInt){
-                f.remove(init);
-                initInt = false;
-            }
-            else{
-                f.remove(dylatacja);
-            }
-            f.add(skrocenie, BorderLayout.CENTER);
+            okno_skrocenie.setContentPane(new Skrocenie().All);
+            okno_skrocenie.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            okno_skrocenie.pack();
+            okno_skrocenie.setLocationRelativeTo(null);
+            okno_skrocenie.setVisible(true);
         }
-        f.validate();
-        f.repaint();
     }
 }
